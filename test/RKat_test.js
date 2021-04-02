@@ -26,6 +26,12 @@ contract('RKat', function (accounts) {
         assert.equal(totalSupply, 0);
     });
     
+    it('initially not paused', async function () {
+        const paused = await rkats.paused();
+        
+        assert.ok(!paused);
+    });
+    
     it('mint rkat', async function () {
         const value = Buffer.from('005f000ca7', 'hex');
         await rkats.mint(value, { from: alice });
