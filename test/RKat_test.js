@@ -1,9 +1,12 @@
 
 const RKat = artifacts.require('RKat');
 
+const truffleAssert = require('truffle-assertions');
+
 contract('RKat', function (accounts) {
     let rkats;
     let alice = accounts[0];
+    let bob = accounts[1];
     
     beforeEach(async function () {
         rkats = await RKat.new();
@@ -24,11 +27,11 @@ contract('RKat', function (accounts) {
     });
     
     it('mint rkat', async function () {
-        const value = Buffer.from('ff5f000ca7', 'hex');
+        const value = Buffer.from('005f000ca7', 'hex');
         await rkats.mint(value, { from: alice });
         
         const rkat = await rkats.rkats(0);        
-        assert.equal(rkat.toString('hex'), '0xff5f000ca7');
+        assert.equal(rkat.toString('hex'), '0x005f000ca7');
         
         const totalSupply = await rkats.totalSupply();
         assert.equal(totalSupply, 1);
@@ -38,6 +41,33 @@ contract('RKat', function (accounts) {
         
         const owner = await rkats.ownerOf(0);
         assert.equal(owner, alice);
+    });
+    
+    it('initialize', async function () {
+        await rkats.initialize(0, 32, { from: bob });
+        
+        const totalSupply = await rkats.totalSupply();
+        assert.equal(totalSupply, 32);
+        
+        const rkat00 = await rkats.rkats(0);        
+        assert.equal(rkat00.toString('hex'), '0xff00000000');
+        const rkat1f = await rkats.rkats(31);
+        assert.equal(rkat1f.toString('hex'), '0xff1f000000');
+        
+        const aliceBalance = await rkats.balanceOf(alice);
+        assert.equal(aliceBalance, 0);
+        const bobBalance = await rkats.balanceOf(bob);
+        assert.equal(bobBalance, 32);
+        
+        const owner00 = await rkats.ownerOf(0);
+        assert.equal(owner00,bob);
+        const owner1f = await rkats.ownerOf(31);
+        assert.equal(owner1f,bob);
+    });
+    
+    it('cannot initialize twice', async function () {
+        await rkats.initialize(0, 8, { from: bob });
+        await truffleAssert.reverts(rkats.initialize(0, 8, { from: bob }));
     });
 });
 

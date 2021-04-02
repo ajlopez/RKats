@@ -12,6 +12,17 @@ contract RKat is ERC721 {
         public {
     }
     
+    function initialize(uint from, uint n) public {
+        require(rkats.length == from, "rkats already generated");
+        
+        uint v = 0x00ff00000000;
+        
+        for (uint k = 0; k < n; k++) {
+            bytes32 value = bytes32((v | ((k + from) << 24)) << (8*27));
+            mint(bytes5(value));
+        }
+    }
+    
     function mint(bytes5 rkat) public {
         uint id = rkats.length;
         rkats.push(rkat);
