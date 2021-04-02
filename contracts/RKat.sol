@@ -6,7 +6,8 @@ import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 
 contract RKat is ERC721 {
     bytes5[] public rkats;
-    
+    mapping(bytes5 => bool) public rkatExists;
+
     constructor() 
         ERC721("RKat", "RKAT") 
         public {
@@ -24,8 +25,11 @@ contract RKat is ERC721 {
     }
     
     function mint(bytes5 rkat) public {
+        require(!rkatExists[rkat], "rkat already exists");
+        
         uint id = rkats.length;
         rkats.push(rkat);
+        rkatExists[rkat] = true;
         _mint(msg.sender, id);
     }
 }

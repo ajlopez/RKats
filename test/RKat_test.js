@@ -43,6 +43,12 @@ contract('RKat', function (accounts) {
         assert.equal(owner, alice);
     });
     
+    it('cannot mint rkat twice', async function () {
+        const value = Buffer.from('005f000ca7', 'hex');
+        await rkats.mint(value, { from: alice });
+        await truffleAssert.reverts(rkats.mint(value, { from: alice }));
+    });
+    
     it('initialize', async function () {
         await rkats.initialize(0, 32, { from: bob });
         
