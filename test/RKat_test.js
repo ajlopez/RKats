@@ -69,6 +69,12 @@ contract('RKat', function (accounts) {
         assert.equal(owner00,bob);
         const owner1f = await rkats.ownerOf(31);
         assert.equal(owner1f,bob);
+        
+        const tokenId = await rkats.tokenOfOwnerByIndex(bob, 31);
+        assert.equal(tokenId, 31);
+        
+        const tokenId2 = await rkats.tokenByIndex(31);
+        assert.equal(tokenId2, 31);
     });
     
     it('cannot initialize twice', async function () {

@@ -3,8 +3,9 @@
 pragma solidity ^0.6.0;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+import '@openzeppelin/contracts/token/ERC721/IERC721Enumerable.sol';
 
-contract RKat is ERC721 {
+contract RKat is IERC721Enumerable, ERC721 {
     bytes5[] public rkats;
     mapping(bytes5 => bool) public rkatExists;
 
