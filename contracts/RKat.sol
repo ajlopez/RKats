@@ -33,5 +33,9 @@ contract RKat is IERC721Enumerable, ERC721Pausable {
         rkatExists[rkat] = true;
         _mint(msg.sender, id);
     }
+    
+    function pause() public {
+        _pause();
+    }
 }
 
