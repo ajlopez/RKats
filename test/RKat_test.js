@@ -40,6 +40,45 @@ contract('RKat', function (accounts) {
         assert.ok(paused);
     });
     
+    it('only owner can pause', async function () {
+        await truffleAssert.reverts(rkats.pause({ from: bob }));
+    });
+    
+    it('cannot pause if already paused', async function () {
+        await rkats.pause();
+        
+        const paused = await rkats.paused();
+        
+        assert.ok(paused);
+        
+        truffleAssert.reverts(rkats.pause());
+    });
+    
+    it('unpause', async function () {
+        await rkats.pause();
+        await rkats.unpause();
+        
+        const paused = await rkats.paused();
+        
+        assert.ok(!paused);
+    });
+    
+    it('only owner can unpause', async function () {
+        await rkats.pause();
+        await truffleAssert.reverts(rkats.unpause({ from: bob }));
+    });
+    
+    it('cannot unpause if not paused', async function () {
+        await rkats.pause();
+        await rkats.unpause();
+        
+        const paused = await rkats.paused();
+        
+        assert.ok(!paused);
+        
+        truffleAssert.reverts(rkats.unpause());
+    });
+    
     it('mint rkat', async function () {
         const value = Buffer.from('005f000ca7', 'hex');
         await rkats.mint(value, { from: alice });

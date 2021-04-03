@@ -4,8 +4,9 @@ pragma solidity ^0.6.0;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721Pausable.sol';
 import '@openzeppelin/contracts/token/ERC721/IERC721Enumerable.sol';
+import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract RKat is IERC721Enumerable, ERC721Pausable {
+contract RKat is IERC721Enumerable, ERC721Pausable, Ownable {
     bytes5[] public rkats;
     mapping(bytes5 => bool) public rkatExists;
 
@@ -34,8 +35,14 @@ contract RKat is IERC721Enumerable, ERC721Pausable {
         _mint(msg.sender, id);
     }
     
-    function pause() public {
+    function pause() public onlyOwner {
+        require(!paused(), "already paused");
         _pause();
+    }
+    
+    function unpause() public onlyOwner {
+        require(paused(), "not paused");
+        _unpause();
     }
 }
 
