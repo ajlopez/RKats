@@ -10,8 +10,6 @@ Non-fungible tokens inspired by MoonCats
 
 ## To Do
 
-- pause, unpause
-- only owner can pause, unpause
 - deploy to RSK testnet
 - dapp with register, login
 - dapp with random tokens page
