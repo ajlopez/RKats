@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RKats in RSK Testnet</title>
+    <link rel="stylesheet" href="./css/bulma.css">
+    <script src="./js/mooncatparser.js"></script>
+    <script src="./js/ethereumjs-tx-1.3.3.min.js"></script>
+    <script src="./js/simplejsonrpc.js"></script>
+    <script src="./js/sha3.js"></script>
+    <script src="./js/simpleabi.js"></script>
+    <script src="./js/rskapi.js"></script>
+    <script src="./js/app.js"></script>
+  </head>
+  <body>
+
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="#home">
+        Home
+      </a>
+
+      <a class="navbar-item"  href="#account">
+        Your Account
+      </a>
+
+      <a class="navbar-item" href="#random">
+        Random RKats
+      </a>
+      <a class="navbar-item" href="#yours">
+        Your RKats
+      </a>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" href="#register">
+            <strong>Sign up</strong>
+          </a>
+          <a class="button is-light" href="#login">
+            Sign in
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <section class="section" id="section_home">
+    <div class="container">
+      <h1 class="title">
+        RKats
+      </h1>
+      
+      <div>
+      RKats in RSK Testnet
+      </div>
+        <div>
+            <canvas id="homecanvas" width=100 height=100 />
+        </div>
+    </div>
+  </section>
+
+  <section class="section" id="section_random" style="display: none">
+    <div class="container">
+      <h1 class="title">
+        Random RKats
+      </h1>
+    </div>
+  </section>
+
+  <section class="section" id="section_yours" style="display: none">
+    <div class="container">
+      <h1 class="title">
+        Your RKats
+      </h1>
+    </div>
+  </section>
+  
+  <section class="section" id="section_account" style="display: none">
+    <div class="container">
+      <h1 class="title">
+        Your Account
+      </h1>
+    </div>
+  </section>
+  
+  <section class="section" id="section_register" style="display: none">
+    <div class="container">
+      <h1 class="title">
+        Sign up
+      </h1>
+    </div>
+  </section>
+
+  <section class="section" id="section_login" style="display: none">
+    <div class="container">
+      <h1 class="title">
+        Sign in
+      </h1>
+    </div>
+  </section>
+
+  <script>
+
+    function locationHashChanged() {
+        const newPage = location.hash.substring(1);
+        
+        app.goTo(newPage);
+    }
+
+    window.onhashchange = locationHashChanged;
+
+    if (location.hash && location.hash.length)
+        locationHashChanged();
+
+    app.start();
+    
+  </script>
+
+</body>
+</html>
+

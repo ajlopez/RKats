@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Single Page Application</title>
+    <link rel="stylesheet" href="./css/bulma.css">
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Single Page Application
+      </h1>
+      <p class="subtitle">
+        Using <strong>Bulma</strong>!
+      </p>
+      <a id="button" href="#hello1" class="button is-primary is-large" >
+        Hello 1 
+      </a>
+      <a id="button" href="#hello2" class="button is-primary is-large" >
+        Hello 2 
+      </a>
+      
+      <a name="#hello1"/>
+      <h2>Hello 1</h2>
+      <a name="#hello2"/>
+      <h2>Hello 2</h2>
+      
+    </div>
+  </section>
+  <script>
+
+function locationHashChanged() {
+    console.log(location.hash);
+}
+
+window.onhashchange = locationHashChanged;
+  </script>
+  </body>
+</html>
+
