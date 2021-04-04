@@ -22,11 +22,17 @@ contract RKat is IERC721Enumerable, ERC721Pausable, Ownable {
         
         for (uint k = 0; k < n; k++) {
             bytes32 value = bytes32((v | ((k + from) << 24)) << (8*27));
-            mint(bytes5(value));
+            internalMint(bytes5(value));
         }
     }
     
     function mint(bytes5 rkat) public {
+        require(abi.encode(rkat)[0] == 0, "invalid rkat");
+        
+        internalMint(rkat);
+    }
+    
+    function internalMint(bytes5 rkat) public {
         require(!rkatExists[rkat], "rkat already exists");
         
         uint id = rkats.length;

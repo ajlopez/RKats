@@ -102,6 +102,11 @@ contract('RKat', function (accounts) {
         await truffleAssert.reverts(rkats.mint(value, { from: alice }));
     });
     
+    it('cannot mint genesis rkat', async function () {
+        const value = Buffer.from('ff5f000ca7', 'hex');
+        await truffleAssert.reverts(rkats.mint(value, { from: alice }));
+    });
+    
     it('initialize', async function () {
         await rkats.initialize(0, 32, { from: bob });
         
