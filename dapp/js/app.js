@@ -28,7 +28,7 @@ const app = (function () {
         
         try {
             const data = await client.call(sender, contract, "rkats(uint256)", [ 42 ]);            
-            const id = data.result.substring(0, 12);
+            const id = data.substring(0, 12);
             
             generateMoonCatImage(id, 16, canvas);            
         }
@@ -76,10 +76,44 @@ const app = (function () {
       
       return canvas.toDataURL();
     }
+    
+    function signIn(username, password, cb) {
+        state.user = {
+            username: username
+        };
+        
+        hide('button_signin');
+        hide('button_signup');
+        show('button_signout');
+        
+        cb(null, null);
+    }
+    
+    function signOut() {
+        hide('button_signout');
+        show('button_signin');
+        show('button_signup');
+        
+        goTo('home');
+    }
+    
+    function show(id) {
+        const element = document.getElementById(id);
+        
+        element.style.display='block';
+    }
+    
+    function hide(id) {
+        const element = document.getElementById(id);
+        
+        element.style.display='none';
+    }
 
     return {
         start,
-        goTo
+        goTo,
+        signIn,
+        signOut
     }
 })();
 

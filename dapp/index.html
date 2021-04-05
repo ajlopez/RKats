@@ -38,11 +38,14 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-primary" href="#register">
+          <a id="button_signup" class="button is-primary" href="#register">
             <strong>Sign up</strong>
           </a>
-          <a class="button is-light" href="#login">
+          <a id="button_signin" class="button is-light" href="#login">
             Sign in
+          </a>
+          <a id="button_signout" class="button is-light" href="#login" style="display: none" onclick="app.signOut()">
+            Sign out
           </a>
         </div>
       </div>
@@ -102,10 +105,42 @@
       <h1 class="title">
         Sign in
       </h1>
+
+<div class="field">
+  <label class="label">Username</label>
+  <div class="control">
+    <input id="username" class="input" type="text" placeholder="Text input">
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Password</label>
+  <div class="control">
+    <input id="password" class="input" type="password">
+  </div>
+</div>
+
+<div class="field is-grouped">
+  <div class="control">
+    <button class="button is-link" onclick="doSignIn()">Sign in</button>
+  </div>
+</div>
+
     </div>
   </section>
 
   <script>
+    function doSignIn() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        
+        app.signIn(username, password, function (err, data) {
+            if (err)
+                alert(err);
+            else
+                app.goTo('account');
+        });
+    }
 
     function locationHashChanged() {
         const newPage = location.hash.substring(1);

@@ -42,7 +42,7 @@ function FetchProvider(url) {
             body: body
         })
         .then(response => response.json())
-        .then(data => { if (log) console.log(data); cb(null, data); })
+        .then(data => { if (log) console.log(data); cb(null, data.result); })
         .catch(err => { if (log) console.log(err); cb(null, err); });    
 	}
     
