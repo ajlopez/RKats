@@ -14,7 +14,7 @@ const app = (function () {
             rkat: '0x128d94b7e7720bfef980533fa1897baf06018dd4'
         },
         
-        api: 'http://rskapis.vercel.app/api/testnet/users/'
+        api: 'https://rskapis.vercel.app/api/testnet/users/'
     };
         
     async function start() {
@@ -78,15 +78,36 @@ const app = (function () {
     }
     
     function signIn(username, password, cb) {
-        state.user = {
-            username: username
+        const data = {
+            username: username,
+            password: password
         };
         
-        hide('button_signin');
-        hide('button_signup');
-        show('button_signout');
+		const body = JSON.stringify(data);
         
-        cb(null, null);
+        const url = config.api + 'login';
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },        
+            body: body
+        })
+        .then(response => { console.log(response); return response.json() })
+        .then(data => { 
+            // TODO check data.error
+            state.user = data;
+            
+            hide('button_signin');
+            hide('button_signup');
+            show('button_signout');
+            
+            cb(null, null);
+        })
+        .catch(err => cb(err, null));    
     }
     
     function signOut() {
