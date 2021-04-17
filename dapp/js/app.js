@@ -39,7 +39,7 @@ const app = (function () {
     
     let currentPage = 'home';
     
-    function goTo(newPage) {
+    async function goTo(newPage) {
         const newSection = document.getElementById('section_' + newPage);
         
         if (!newSection)
@@ -51,6 +51,28 @@ const app = (function () {
         newSection.style.display = 'block';
         
         currentPage = newPage;
+        
+        if (newPage === 'random')
+            await fillRandom();
+    }
+
+    async function fillRandom() {
+        const url = config.host;
+        const sender = config.accounts.alice;
+        const contract = config.instances.rkat;
+        
+        const client = rskapi.client(url);
+
+        const nrkats = parseInt(await client.call(sender, contract, 'totalSupply()'));
+        
+        for (let k = 0; k < 8; k++) {
+            const nrkat = Math.floor(Math.random() * nrkats);
+            const data = await client.call(sender, contract, "rkats(uint256)", [ nrkat ]);
+            const id = data.substring(0, 12);
+            const canvas = document.getElementById('randomcanvas' + k);
+            
+            generateMoonCatImage(id, 8, canvas);
+        }
     }
     
     function generateMoonCatImage(catId, size, canvas){
@@ -134,7 +156,8 @@ const app = (function () {
         start,
         goTo,
         signIn,
-        signOut
+        signOut,
+        fillRandom
     }
 })();
 
