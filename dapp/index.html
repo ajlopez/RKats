@@ -76,18 +76,22 @@
       <div class="block">
         <button class="button is-link is-primary is-large" onclick="app.fillRandom()">Refresh</button>
       </div>
-      <div class="columns">
-        <div class="column">
-            <canvas id="randomcanvas0" width="168" height="136"></canvas>
-            <footer>
+      <div class="columns block">
+        <div class="column block" style="background-color: #f0f0f0">
+            <header class="block">
             <button class="button is-primary" onclick="app.mutate(0)">Mutate</button>
-            </footer>
+            </header>
+            <article>
+            <canvas id="randomcanvas0"></canvas>
+            </article>
         </div>
-        <div class="column">
-            <canvas id="randomcanvas1" width="168" height="136"></canvas>
-            <footer>
+        <div class="column block">
+            <header class="block">
             <button class="button is-primary" onclick="app.mutate(1)">Mutate</button>
-            </footer>
+            </header>
+            <article>
+            <canvas id="randomcanvas1"></canvas>
+            </article>
         </div>
         <div class="column">
             <canvas id="randomcanvas2" width="168" height="136"></canvas>
